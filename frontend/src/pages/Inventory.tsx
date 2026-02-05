@@ -1,55 +1,49 @@
-// import Header from '../components/common/Header'; 
+import Header from '../components/common/Header'; 
 import InventoryStats from '../components/inventory/InventoryStats';
 import InventoryGrid from '../components/inventory/InventoryGrid';
-import { Plus } from 'lucide-react';
+import { Plus, Filter } from 'lucide-react';
 
 const Inventory = () => {
-    // Inventory view has specific dark styling as per ID request
   return (
-    <div className="min-vh-100 text-white p-4" style={{backgroundColor: '#000', margin: '-2rem', padding: '2rem'}}>
-        {/* Start Header Replacement for Inventory */}
-        <div className="d-flex justify-content-between align-items-center mb-5 pt-3">
-             <div>
-                 <h1 className="display-4 fw-bold mb-0">Inventory. <span className="text-secondary">Mastered.</span></h1>
-                 <p className="text-secondary mt-2">Real-time valuation, ethical tracking, and precise stock management.</p>
-             </div>
-             <div>
-                 <button className="btn btn-primary rounded-pill px-4 py-2 me-3">
-                    <Plus size={16} className="me-2 inline-block" />
-                    Add New Item
-                 </button>
-                 <button className="btn btn-link text-secondary text-decoration-none">Export Data &gt;</button>
-             </div>
-        </div>
-        {/* End Header */}
+    <div className="container-fluid pb-5">
+      <Header 
+        title="Inventory" 
+        subtitle="Real-time valuation and stock management." 
+      >
+         <button className="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill px-3" style={{borderColor: 'var(--border-color)', color: 'var(--text-main)'}}>
+             <Filter size={16} />
+             <span>Filter</span>
+         </button>
+         <button className="btn btn-primary d-flex align-items-center gap-2 rounded-pill px-4 text-dark fw-bold">
+             <Plus size={18} />
+             <span>Add Item</span>
+         </button>
+      </Header>
 
-        <InventoryStats />
-        
-        <div className="d-flex gap-3 mb-4 flex-wrap">
-            <button className="btn btn-light rounded-pill px-4 fw-medium">All Items</button>
-            <button className="btn btn-outline-secondary rounded-pill px-4 text-white border-dark-subtle">18k Gold</button>
-            <button className="btn btn-outline-secondary rounded-pill px-4 text-white border-dark-subtle">Platinum</button>
-            <button className="btn btn-outline-secondary rounded-pill px-4 text-white border-dark-subtle">Gemstones</button>
-            <button className="btn btn-outline-secondary rounded-pill px-4 text-white border-dark-subtle">Ethical</button>
-            <div className="ms-auto">
-                 <button className="btn btn-link text-light text-decoration-none small">Newest Added ▼</button>
-            </div>
-        </div>
+      <InventoryStats />
+      
+      <div className="d-flex gap-2 mb-4 overflow-auto pb-2 scrollbar-hide">
+          <button className="btn btn-dark rounded-pill px-4 fw-medium text-white shadow-sm" style={{fontSize: '0.9rem'}}>All Items</button>
+          <button className="btn btn-light rounded-pill px-4 text-muted border-0 hover-bg-light-darker" style={{fontSize: '0.9rem'}}>18k Gold</button>
+          <button className="btn btn-light rounded-pill px-4 text-muted border-0 hover-bg-light-darker" style={{fontSize: '0.9rem'}}>Platinum</button>
+          <button className="btn btn-light rounded-pill px-4 text-muted border-0 hover-bg-light-darker" style={{fontSize: '0.9rem'}}>Gemstones</button>
+          <button className="btn btn-light rounded-pill px-4 text-muted border-0 hover-bg-light-darker" style={{fontSize: '0.9rem'}}>Ethical</button>
+      </div>
 
-        <InventoryGrid />
-        
-        <div className="d-flex justify-content-center mt-5 pb-5">
-            <nav>
-                <ul className="pagination pagination-dark">
-                    <li className="page-item"><button className="page-link bg-transparent border-0 text-white">&lt;</button></li>
-                    <li className="page-item active"><button className="page-link bg-light text-dark border-0 rounded-circle mx-1" style={{width: '36px', height: '36px'}}>1</button></li>
-                    <li className="page-item"><button className="page-link bg-transparent border-0 text-white">2</button></li>
-                    <li className="page-item"><button className="page-link bg-transparent border-0 text-white">...</button></li>
-                    <li className="page-item"><button className="page-link bg-transparent border-0 text-white">12</button></li>
-                    <li className="page-item"><button className="page-link bg-transparent border-0 text-white">&gt;</button></li>
-                </ul>
-            </nav>
-        </div>
+      <InventoryGrid />
+      
+      <div className="d-flex justify-content-center mt-5">
+          <nav>
+              <ul className="pagination mb-0 gap-2">
+                  <li className="page-item"><button className="page-link border-0 rounded-circle d-flex align-items-center justify-content-center text-muted hover-bg-light" style={{width: '36px', height: '36px'}}>&lt;</button></li>
+                  <li className="page-item"><button className="page-link border-0 rounded-circle d-flex align-items-center justify-content-center bg-dark text-white shadow-sm" style={{width: '36px', height: '36px'}}>1</button></li>
+                  <li className="page-item"><button className="page-link border-0 rounded-circle d-flex align-items-center justify-content-center text-muted hover-bg-light" style={{width: '36px', height: '36px'}}>2</button></li>
+                  <li className="page-item"><button className="page-link border-0 rounded-circle d-flex align-items-center justify-content-center text-muted hover-bg-light" style={{width: '36px', height: '36px'}}>...</button></li>
+                  <li className="page-item"><button className="page-link border-0 rounded-circle d-flex align-items-center justify-content-center text-muted hover-bg-light" style={{width: '36px', height: '36px'}}>12</button></li>
+                  <li className="page-item"><button className="page-link border-0 rounded-circle d-flex align-items-center justify-content-center text-muted hover-bg-light" style={{width: '36px', height: '36px'}}>&gt;</button></li>
+              </ul>
+          </nav>
+      </div>
     </div>
   );
 };

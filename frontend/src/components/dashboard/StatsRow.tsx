@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Star, Plus, ArrowRight, Coins, Gem, BarChart3, Receipt, Loader2 } from 'lucide-react';
+import PriceChartModal from './PriceChartModal';
 
 const StatsRow = () => {
   const [prices, setPrices] = useState({ gold: null, silver: null });
   const [loading, setLoading] = useState(true);
+  
+  // Modal State
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<any>(null);
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -28,7 +33,7 @@ const StatsRow = () => {
     };
 
     fetchPrices();
-    const interval = setInterval(fetchPrices, 300000); // Update every 5 minutes
+    const interval = setInterval(fetchPrices, 300000); // 5 minutes
     return () => clearInterval(interval);
   }, []);
 
@@ -38,6 +43,24 @@ const StatsRow = () => {
       style: 'currency',
       currency: 'USD',
     }).format(price);
+  };
+
+  // Generate mock history data based on current price
+  // Removed, logic moved to PriceChartModal
+
+  const handleCardClick = (card: any) => {
+    if (card.title.includes('Gold') || card.title.includes('Silver')) {
+      const basePrice = card.title.includes('Gold') ? prices.gold : prices.silver;
+      
+      setSelectedCard({
+        ...card,
+        basePrice: basePrice, // Pass raw number
+        color: card.title.includes('Gold') ? '#f59e0b' : '#64748b' // warning vs secondary color hex
+      });
+      setShowModal(true);
+    } else {
+      // For other cards just show alert or nothing
+    }
   };
 
   const cards = [
@@ -80,67 +103,86 @@ const StatsRow = () => {
   ];
 
   return (
-    <div className="row g-4 mb-5">
-      {cards.map((card, index) => (
-        <div className="col-12 col-md-6 col-lg-4" key={index}>
-          <div className="card stat-card h-100 p-4 d-flex flex-column justify-content-between" style={{minHeight: '180px', cursor: 'pointer'}}>
-            <div>
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <div className="d-flex align-items-center gap-2">
-                  {card.icon}
-                  <h6 className="fw-bold mb-0" style={{color: 'var(--text-main)', fontSize: '0.95rem'}}>{card.title}</h6>
-                </div>
-                {loading && (index < 2) && <Loader2 size={14} className="animate-spin text-muted" />}
-              </div>
-              <p className="text-muted small mb-3">{card.description}</p>
-            </div>
-            
-            <div className="d-flex justify-content-between align-items-end">
+    <>
+      <div className="row g-4 mb-5">
+        {cards.map((card, index) => (
+          <div className="col-12 col-md-6 col-lg-4" key={index}>
+            <div 
+              className="card stat-card h-100 p-4 d-flex flex-column justify-content-between" 
+              style={{minHeight: '180px', cursor: 'pointer'}}
+              onClick={() => handleCardClick(card)}
+            >
               <div>
-                <div className="fw-bold fs-4 mb-1" style={{color: 'var(--text-main)'}}>{card.value}</div>
-                <div className="d-flex align-items-center gap-3 text-muted" style={{fontSize: '0.85rem'}}>
-                  <div className="d-flex align-items-center gap-1">
-                    <Star size={14} />
-                    <span>{card.metric}</span>
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                  <div className="d-flex align-items-center gap-2">
+                    {card.icon}
+                    <h6 className="fw-bold mb-0" style={{color: 'var(--text-main)', fontSize: '0.95rem'}}>{card.title}</h6>
                   </div>
-                  <span className={card.trendUp ? 'text-success' : 'text-danger'} style={{fontWeight: '500'}}>
-                    {card.trend}
-                  </span>
+                  {loading && (index < 2) && <Loader2 size={14} className="animate-spin text-muted" />}
                 </div>
+                <p className="text-muted small mb-3">{card.description}</p>
               </div>
               
-              <button 
-                className="btn p-0 border-0 shadow-none text-muted hover-text-main transition-all" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  alert(`Showing details for ${card.title}`);
-                }}
-              >
-                <ArrowRight size={22} />
-              </button>
+              <div className="d-flex justify-content-between align-items-end">
+                <div>
+                  <div className="fw-bold fs-4 mb-1" style={{color: 'var(--text-main)'}}>{card.value}</div>
+                  <div className="d-flex align-items-center gap-3 text-muted" style={{fontSize: '0.85rem'}}>
+                    <div className="d-flex align-items-center gap-1">
+                      <Star size={14} />
+                      <span>{card.metric}</span>
+                    </div>
+                    <span className={card.trendUp ? 'text-success' : 'text-danger'} style={{fontWeight: '500'}}>
+                      {card.trend}
+                    </span>
+                  </div>
+                </div>
+                
+                <button 
+                  className="btn p-0 border-0 shadow-none text-muted hover-text-main transition-all" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCardClick(card);
+                  }}
+                >
+                  <ArrowRight size={22} />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      {/* "Add Project" Card at the end */}
-      <div className="col-12 col-md-6 col-lg-4">
-        <div className="card stat-card h-100 p-4 border-dashed d-flex flex-column justify-content-center align-items-center" 
-             style={{
-               backgroundColor: 'var(--bg-light)', 
-               borderStyle: 'dashed', 
-               borderWidth: '2px',
-               minHeight: '180px', 
-               cursor: 'pointer', 
-               borderColor: 'var(--card-hover-border)'
-             }}>
-          <div className="mb-2 text-muted">
-            <Plus size={24} />
+        {/* "Add Project" Card at the end */}
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card stat-card h-100 p-4 border-dashed d-flex flex-column justify-content-center align-items-center" 
+               style={{
+                 backgroundColor: 'var(--bg-light)', 
+                 borderStyle: 'dashed', 
+                 borderWidth: '2px',
+                 minHeight: '180px', 
+                 cursor: 'pointer', 
+                 borderColor: 'var(--card-hover-border)'
+               }}>
+            <div className="mb-2 text-muted">
+              <Plus size={24} />
+            </div>
+            <span className="fw-bold text-muted" style={{fontSize: '0.9rem'}}>Add Insight</span>
           </div>
-          <span className="fw-bold text-muted" style={{fontSize: '0.9rem'}}>Add Insight</span>
         </div>
       </div>
-    </div>
+
+      {selectedCard && (
+        <PriceChartModal 
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          title={selectedCard.title}
+          currentPrice={selectedCard.value}
+          trend={selectedCard.trend}
+          trendUp={selectedCard.trendUp}
+          basePrice={selectedCard.basePrice}
+          color={selectedCard.color}
+        />
+      )}
+    </>
   );
 };
 
