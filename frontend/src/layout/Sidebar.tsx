@@ -7,95 +7,110 @@ import {
   ShoppingBag, 
   Sparkles, 
   Settings,
-  Moon,
-  Sun
+  MoreVertical,
+  ChevronDown,
+  ChevronRight,
+  Folder,
+  Tag
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useState } from 'react';
 
 const Sidebar = () => {
   const { theme, toggleTheme } = useTheme();
+  const [storeOpen, setStoreOpen] = useState(true);
+  const [businessOpen, setBusinessOpen] = useState(true);
+
   return (
-    <nav className="sidebar d-flex flex-column justify-content-between pb-4">
+    <nav className="sidebar d-flex flex-column justify-content-between">
       <div>
-        <div className="px-4 py-3 d-flex align-items-center gap-2 mb-2">
-          <div className="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle" style={{width: '28px', height: '28px'}}>
-            <Sparkles size={16} className="text-primary" />
-          </div>
-          <h6 className="mb-0 fw-bold" style={{letterSpacing: '-0.02em', fontSize: '0.95rem'}}>Paulito Jewels</h6>
+        {/* Header matching "Unified Folders" */}
+        <div className="nav-header px-3 mt-2">
+          <span className="nav-brand-text">Paulito Jewels</span>
+          <MoreVertical size={16} className="text-muted cursor-pointer" />
         </div>
 
-        <div className="mt-2">
-          <NavLink to="/" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
-            <LayoutDashboard size={18} className="nav-icon" />
-            <span>Dashboard</span>
-          </NavLink>
+        {/* Tree Root 1: Store (Inbox style) */}
+        <div className="mt-1">
+          <div 
+            className="nav-tree-item"
+            onClick={() => setStoreOpen(!storeOpen)}
+          >
+            {storeOpen ? <ChevronDown size={14} className="text-muted me-2" /> : <ChevronRight size={14} className="text-muted me-2" />}
+            <Folder size={14} className="text-primary me-2" />
+            <span>Store</span>
+          </div>
 
-          <div className="nav-group-label">Inventory</div>
-          
-          <NavLink to="/inventory" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
-            <Package size={18} className="nav-icon" />
-            <span>Products</span>
-          </NavLink>
-          
-          <NavLink to="/workshop" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
-            <div className="d-flex w-100 justify-content-between align-items-center">
-              <div className="d-flex gap-2 align-items-center">
-                <Wrench size={18} className="nav-icon" />
+          {storeOpen && (
+            <div className="d-flex flex-column">
+              <NavLink to="/" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
+                <LayoutDashboard className="nav-icon" />
+                <span>Dashboard</span>
+              </NavLink>
+              
+              <NavLink to="/inventory" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
+                <Package className="nav-icon" />
+                <span>Inventory</span>
+              </NavLink>
+              
+              <NavLink to="/workshop" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
+                <Wrench className="nav-icon" />
                 <span>Workshop</span>
-              </div>
-              <span className="badge bg-light text-muted border rounded-pill px-2" style={{fontSize: '0.65rem'}}>3</span>
+              </NavLink>
             </div>
-          </NavLink>
+          )}
+        </div>
 
-          <div className="nav-group-label">Business</div>
+        {/* Tree Root 2: Business */}
+        <div className="mt-1">
+           <div 
+            className="nav-tree-item"
+            onClick={() => setBusinessOpen(!businessOpen)}
+          >
+            {businessOpen ? <ChevronDown size={14} className="text-muted me-2" /> : <ChevronRight size={14} className="text-muted me-2" />}
+            <Folder size={14} className="text-success me-2" />
+            <span>Business</span>
+          </div>
 
-          <NavLink to="/clients" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
-            <Users size={18} className="nav-icon" />
-            <span>Clients</span>
-          </NavLink>
+          {businessOpen && (
+            <div className="d-flex flex-column">
+              <NavLink to="/clients" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
+                <Users className="nav-icon" />
+                <span>Clients</span>
+              </NavLink>
 
-          <NavLink to="/sales" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
-            <ShoppingBag size={18} className="nav-icon" />
-            <span>Sales History</span>
-          </NavLink>
+              <NavLink to="/sales" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
+                <ShoppingBag className="nav-icon" />
+                <span>Sales</span>
+              </NavLink>
 
-          <NavLink to="/intelligence" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
-            <Sparkles size={18} className="nav-icon" />
-            <span>Intelligence</span>
-          </NavLink>
+              <NavLink to="/intelligence" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
+                <Sparkles className="nav-icon" />
+                <span>Intelligence</span>
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="d-flex flex-column gap-1">
+      <div className="mt-auto pb-3">
+        {/* Tags / Settings styled as another tree section */}
+        <div className="nav-header px-3 mb-1">
+          <span className="nav-header-text">Tags</span>
+          <MoreVertical size={14} className="text-muted cursor-pointer" />
+        </div>
+
         <NavLink to="/settings" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
-          <Settings size={18} className="nav-icon" />
+          <Settings className="nav-icon text-muted" />
           <span>Settings</span>
         </NavLink>
 
-        <div className="px-3 mt-2">
-          <div 
-            className="d-flex align-items-center justify-content-between p-2 rounded-pill cursor-pointer" 
-            style={{backgroundColor: 'var(--bg-light)', border: '1px solid var(--border-color)', margin: '0 0.5rem'}}
-            onClick={toggleTheme}
-          >
-            <div className="d-flex align-items-center gap-2">
-              {theme === 'light' ? <Sun size={14} className="text-warning" /> : <Moon size={14} className="text-primary" />}
-              <span className="fw-semibold" style={{fontSize: '0.75rem'}}>{theme === 'light' ? 'Light' : 'Dark'}</span>
-            </div>
-            
-            <div className="position-relative bg-secondary bg-opacity-25 rounded-pill" style={{width: '32px', height: '18px'}}>
-              <div 
-                className="position-absolute bg-white rounded-circle shadow-sm"
-                style={{
-                  width: '14px', 
-                  height: '14px', 
-                  top: '2px', 
-                  left: theme === 'light' ? '2px' : '16px',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)'
-                }}
-              ></div>
-            </div>
-          </div>
+        <div 
+          className="nav-link cursor-pointer" 
+          onClick={toggleTheme}
+        >
+          <Tag className={`nav-icon ${theme === 'light' ? 'text-warning' : 'text-primary'}`} />
+          <span>{theme === 'light' ? 'Light Mode' : 'Dark Mode'}</span>
         </div>
       </div>
     </nav>
