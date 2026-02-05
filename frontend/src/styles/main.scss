@@ -13,22 +13,23 @@
   --text-main: #1a1a1a;
   --text-muted: #64748b;
   --border-color: #f1f5f9;
-  --card-hover-border: #cbd5e1;
+  --card-hover-border: #e2e8f0;
+  --border-hover: #cbd5e1;
   --search-bg: #f8fafc;
   --search-border: #d1d5db;
   --accent-blue: #f0f7ff;
 
   /* Bootstrap Overrides to link to Theme Variables */
   .text-primary {
-    color: var(--primary-color) !important;
+    color: var(--primary-color);
   }
 
   .bg-primary {
-    background-color: var(--primary-color) !important;
+    background-color: var(--primary-color);
   }
 
   .border-primary {
-    border-color: var(--primary-color) !important;
+    border-color: var(--primary-color);
   }
 
   .btn-primary {
@@ -63,7 +64,8 @@
   --text-main: #e5e5e5;
   --text-muted: #a3a3a3;
   --border-color: #262626;
-  --card-hover-border: #404040;
+  --card-hover-border: #333333;
+  --border-hover: #404040;
   --search-bg: #262626;
   --search-border: #404040;
   --accent-blue: #262626;
@@ -74,6 +76,14 @@
     --bs-table-color: var(--text-main);
     --bs-table-border-color: var(--border-color);
     color: var(--text-main);
+
+    &> :not(caption)>*>* {
+      border-bottom-width: 1px;
+    }
+
+    thead {
+      border-bottom-color: var(--card-hover-border) !important;
+    }
   }
 
   .text-dark {
@@ -125,17 +135,32 @@ h6,
   border-right: 1px solid var(--border-color);
   z-index: 1000;
   transition: background-color 0.3s, border-color 0.3s;
+  padding: 1rem 0;
+
+  .nav-group-label {
+    padding: 1.5rem 1.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .nav-link {
     color: var(--text-muted);
-    font-size: 0.925rem;
-    font-weight: 400;
-    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 2px 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    border: none !important; // Remove the old blue border
 
     &:hover {
       background-color: var(--bg-light);
@@ -143,10 +168,18 @@ h6,
     }
 
     &.active {
+      color: var(--text-main) !important;
+      background-color: var(--bg-active) !important;
+      font-weight: 600;
+    }
+
+    .nav-icon {
+      opacity: 0.7;
+    }
+
+    &.active .nav-icon {
+      opacity: 1;
       color: var(--primary-color);
-      background-color: var(--bg-active);
-      border-left: 3px solid var(--primary-color);
-      font-weight: 500;
     }
   }
 }
@@ -158,14 +191,14 @@ h6,
 }
 
 .stat-card {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--card-hover-border);
   border-radius: 12px;
   background: var(--bg-card);
   box-shadow: none !important;
   transition: all 0.3s;
 
   &:hover {
-    border-color: var(--card-hover-border);
+    border-color: var(--border-hover);
   }
 }
 
@@ -219,6 +252,25 @@ h6,
 
 .bg-light {
   background-color: var(--bg-light) !important;
+}
+
+.hover-text-main:hover {
+  color: var(--text-main) !important;
+}
+
+.transition-all {
+  transition: all 0.2s ease-in-out !important;
+}
+
+/* Enhanced Table Styling */
+.table {
+  thead {
+    border-bottom: 2px solid var(--border-color) !important;
+
+    th {
+      border-bottom: 2px solid var(--border-color) !important;
+    }
+  }
 }
 
 /* Premium Action Button */

@@ -61,7 +61,7 @@ const ActiveRepairs = () => {
   };
 
   return (
-    <div className="card stat-card h-100 p-0 border-0 shadow-none">
+    <div className="card stat-card h-100 p-0">
       <div className="card-header bg-transparent border-bottom py-3 px-4 d-flex justify-content-between align-items-center rounded-top-4">
         <h5 className="fw-bold mb-0" style={{fontSize: '1.25rem'}}>Active Workshop Repairs</h5>
         <button 
@@ -73,15 +73,15 @@ const ActiveRepairs = () => {
         </button>
       </div>
       <div className="table-responsive" style={{overflow: 'visible'}}>
-        <table className="table align-middle mb-0">
+        <table className="table table-hover align-middle mb-0">
           <thead style={{backgroundColor: 'var(--bg-light)'}}>
             <tr>
-              <th className="px-4 py-3 text-muted fw-semibold small border-0" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Job ID</th>
-              <th className="py-3 text-muted fw-semibold small border-0" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Customer</th>
-              <th className="py-3 text-muted fw-semibold small border-0" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Item Details</th>
-              <th className="py-3 text-muted fw-semibold small border-0" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Status</th>
-              <th className="py-3 text-muted fw-semibold small border-0" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Due Date</th>
-              <th className="px-4 py-3 border-0"></th>
+              <th className="px-4 py-3 text-muted fw-semibold small" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Job ID</th>
+              <th className="py-3 text-muted fw-semibold small" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Customer</th>
+              <th className="py-3 text-muted fw-semibold small" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Item Details</th>
+              <th className="py-3 text-muted fw-semibold small" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Status</th>
+              <th className="py-3 text-muted fw-semibold small" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'}}>Due Date</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>

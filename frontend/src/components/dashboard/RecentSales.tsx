@@ -30,7 +30,7 @@ const RecentSales = () => {
     };
 
     return (
-        <div className="card stat-card h-100 p-0 border-0 shadow-none">
+        <div className="card stat-card h-100 p-0">
              <div className="card-header bg-transparent border-bottom py-3 px-4 rounded-top-4">
                 <h5 className="fw-bold mb-0" style={{fontSize: '1.25rem'}}>Recent Sales</h5>
             </div>
