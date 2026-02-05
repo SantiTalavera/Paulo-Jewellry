@@ -2,7 +2,6 @@ import Header from '../components/common/Header';
 import StatsRow from '../components/dashboard/StatsRow';
 import ActiveRepairs from '../components/dashboard/ActiveRepairs';
 import RecentSales from '../components/dashboard/RecentSales';
-import IntelligenceCard from '../components/dashboard/IntelligenceCard';
 
 const Dashboard = () => {
   return (
@@ -22,8 +21,6 @@ const Dashboard = () => {
             <RecentSales />
         </div>
       </div>
-
-      <IntelligenceCard />
     </div>
   );
 };
