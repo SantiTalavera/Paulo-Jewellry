@@ -1,3 +1,4 @@
+import { History, ArrowUpRight } from 'lucide-react';
 
 const RecentSales = () => {
     const sales = [
@@ -24,37 +25,56 @@ const RecentSales = () => {
         }
     ];
 
+    const handleViewHistory = () => {
+        alert("Navigating to Sales History...");
+    };
+
     return (
-        <div className="card border-0 shadow-sm h-100">
-             <div className="card-header bg-white border-0 py-4 px-4">
-                <h5 className="fw-bold mb-0">Recent Sales</h5>
+        <div className="card stat-card h-100 p-0 border-0 shadow-none">
+             <div className="card-header bg-transparent border-bottom py-3 px-4 rounded-top-4">
+                <h5 className="fw-bold mb-0" style={{fontSize: '1.25rem'}}>Recent Sales</h5>
             </div>
-            <div className="card-body px-4 pt-0">
+            <div className="card-body px-4 pt-4">
                 <div className="d-flex flex-column gap-4">
                     {sales.map((sale, idx) => (
-                        <div key={idx} className="d-flex align-items-center justify-content-between">
-                            <div className="d-flex align-items-center gap-3">
-                                <img 
-                                    src={sale.image} 
-                                    alt={sale.item} 
-                                    className="rounded-3 object-fit-cover" 
-                                    width="50" 
-                                    height="50"
-                                />
-                                <div>
-                                    <h6 className="mb-0 fw-semibold text-truncate" style={{maxWidth: '140px'}}>{sale.item}</h6>
-                                    <small className="text-muted">{sale.customer}</small>
+                        <div key={idx} className="d-flex align-items-center gap-3 p-2 rounded-3 hover-bg-light" style={{transition: 'all 0.2s', cursor: 'pointer'}}>
+                            <div className="flex-shrink-0 position-relative">
+                                <div className="rounded-circle border d-flex align-items-center justify-content-center bg-light overflow-hidden" style={{width: '44px', height: '44px', borderColor: 'var(--border-color) !important'}}>
+                                    <img 
+                                        src={sale.image} 
+                                        alt="" 
+                                        className="w-100 h-100 object-fit-cover" 
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).style.display = 'none';
+                                            (e.target as HTMLImageElement).parentElement!.classList.add('bg-primary-subtle');
+                                        }}
+                                    />
+                                    <span className="position-absolute small fw-bold text-primary" style={{zIndex: -1}}>{sale.customer.charAt(0)}</span>
                                 </div>
+                                <div className="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle" style={{width: '10px', height: '10px', zIndex: 1}}></div>
                             </div>
-                            <div className="text-end">
-                                <div className="fw-bold">{sale.price}</div>
-                                <small className="text-muted" style={{fontSize: '11px'}}>{sale.time}</small>
+                            
+                            <div className="flex-grow-1 min-width-0">
+                                <h6 className="mb-0 fw-semibold text-truncate text-main" style={{fontSize: '0.95rem'}}>{sale.item}</h6>
+                                <small className="text-muted" style={{fontSize: '0.8rem'}}>{sale.customer}</small>
+                            </div>
+
+                            <div className="flex-shrink-0 text-end ms-2">
+                                <div className="fw-bold" style={{fontSize: '0.95rem'}}>{sale.price}</div>
+                                <div className="text-muted" style={{fontSize: '11px'}}>{sale.time}</div>
                             </div>
                         </div>
                     ))}
                 </div>
-                <button className="btn btn-light w-100 text-primary fw-medium mt-4 py-2">
+                
+                <button 
+                  className="btn btn-outline-light text-primary w-100 fw-semibold mt-4 py-2 border d-flex align-items-center justify-content-center gap-2"
+                  style={{fontSize: '0.9rem', borderRadius: '10px', borderColor: 'var(--border-color) !important'}}
+                  onClick={handleViewHistory}
+                >
+                    <History size={16} />
                     View Sales History
+                    <ArrowUpRight size={14} className="opacity-50" />
                 </button>
             </div>
         </div>
